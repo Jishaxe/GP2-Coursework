@@ -3,12 +3,15 @@
 #include <GL/glew.h>
 #include "Display.h" 
 #include "Shader.h"
+#include "MushroomController.h"
 #include "Mesh.h"
 #include <list>
 #include <iterator>
+#include "Resources.h"
 #include "GameObject.h"
 #include "Texture.h"
 #include "transform.h"
+
 
 using namespace std;
 
@@ -27,11 +30,12 @@ private:
 	void update();
 	void draw();
 
+	const string RESOURCES = "D:\\git\\GP2-Coursework\\res\\";
+
 	Display _gameDisplay;
 
 	Camera camera;
-
-	GameObject* monkey;
+	Resources resources;
 
 	list<GameObject*> gameObjects;
 

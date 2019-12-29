@@ -1,5 +1,6 @@
 #pragma once
 #include <glm\glm.hpp>
+#include <iostream>
 #include <GL\glew.h>
 #include <string>
 #include "Shader.h"
@@ -39,10 +40,10 @@ public:
 	ComponentType getType();
 	void draw(Camera* camera);
 	void init();
-	void loadModel(const std::string& filename);
+	void loadModel(IndexedModel* model);
 	void loadShader(std::string fileName);
 	void loadTexture(std::string fileName);
-	void update();
+	void update(double deltaTime);
 
 	Texture texture;
 	Shader shader;

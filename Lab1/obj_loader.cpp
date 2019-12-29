@@ -387,7 +387,7 @@ static inline std::vector<std::string> SplitString(const std::string &s, char de
     unsigned int start = 0;
     unsigned int end = 0;
         
-    while(end <= strLength)
+    while(end < strLength)
     {
         while(end <= strLength)
         {

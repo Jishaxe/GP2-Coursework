@@ -6,7 +6,7 @@
 class GameObject;
 
 enum ComponentType {
-	MESH
+	MESH, MUSHROOM_CONTROLLER
 };
 
 class Component
@@ -18,7 +18,7 @@ public:
 	GameObject* gameObject;
 	virtual ComponentType getType() = 0;
 	virtual void init() = 0;
-	virtual void update() = 0;
+	virtual void update(double deltaTime) = 0;
 	virtual void draw(Camera* camera) = 0;
 };
 

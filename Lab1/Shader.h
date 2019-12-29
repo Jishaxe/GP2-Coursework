@@ -10,7 +10,7 @@ public:
 	Shader();
 
 	void Bind(); //Set gpu to use our shaders
-	void Update(const Transform& transform, const Camera& camera);
+	void Update(const glm::mat4 modelMatrix, const Camera& camera);
 	void init(const std::string& filename);
 
 	std::string Shader::LoadShader(const std::string& fileName);

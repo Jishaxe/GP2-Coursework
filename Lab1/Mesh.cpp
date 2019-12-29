@@ -53,13 +53,12 @@ Mesh::Mesh()
 	drawCount = NULL;
 }
 
-void Mesh::loadModel(const std::string& filename)
+void Mesh::loadModel(IndexedModel* model)
 {
-	IndexedModel model = OBJModel(filename).ToIndexedModel();
-	initModel(model);
+	initModel(*model);
 }
 
-void Mesh::update()
+void Mesh::update(double deltaTime)
 {
 }
 
@@ -76,7 +75,7 @@ ComponentType Mesh::getType()
 void Mesh::draw(Camera* camera)
 {
 	shader.Bind();
-	shader.Update(this->gameObject->transform, *camera);
+	shader.Update(this->gameObject->getModelMatrix(), *camera);
 	texture.Bind(0);
 
 	glBindVertexArray(vertexArrayObject);

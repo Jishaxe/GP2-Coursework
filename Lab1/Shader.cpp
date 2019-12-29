@@ -44,9 +44,9 @@ void Shader::Bind()
 	glUseProgram(program); //installs the program object specified by program as part of rendering state
 }
 
-void Shader::Update(const Transform& transform, const Camera& camera)
+void Shader::Update(const glm::mat4 modelMatrix, const Camera& camera)
 {
-	glm::mat4 mvp = camera.GetViewProjection() * transform.GetModel();
+	glm::mat4 mvp = camera.GetViewProjection() * modelMatrix;
 	glUniformMatrix4fv(uniforms[TRANSFORM_U], 1, GLU_FALSE, &mvp[0][0]);
 }
 

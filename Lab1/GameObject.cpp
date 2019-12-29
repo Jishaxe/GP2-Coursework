@@ -16,11 +16,27 @@ void GameObject::init()
 
 }
 
-void GameObject::update()
+glm::mat4 GameObject::getModelMatrix() {
+	glm::mat4 matrix = transform.GetModel();
+
+	// if this gameobject has a parent, recursively multiply the matrix of each parent until the root (parent is nullptr)
+	if (parent != nullptr) {
+		matrix *= parent->getModelMatrix();
+	}
+
+	return matrix;
+}
+
+void GameObject::update(double deltaTime)
 {
 	// iterates through all the components and calls update()
 	for (auto it = _components.begin(); it != _components.end(); ++it) {
-		(*it)->update();
+		(*it)->update(deltaTime);
+	}
+
+	// iterates through all the child gameobjects and calls update()
+	for (auto it = _children.begin(); it != _children.end(); ++it) {
+		(*it)->update(deltaTime);
 	}
 }
 
@@ -30,6 +46,17 @@ void GameObject::draw(Camera* camera)
 	for (auto it = _components.begin(); it != _components.end(); ++it) {
 		(*it)->draw(camera);
 	}
+
+	// iterates through all the child gameobjects and calls update()
+	for (auto it = _children.begin(); it != _children.end(); ++it) {
+		(*it)->draw(camera);
+	}
+}
+
+
+void GameObject::addChild(GameObject* child) {
+	_children.push_back(child);
+	child->parent = this;
 }
 
 void GameObject::addComponent(Component * component)
