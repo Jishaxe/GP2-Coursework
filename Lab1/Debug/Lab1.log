@@ -1,18 +1,2 @@
-﻿  Game.cpp
-d:\git\gp2-coursework\lab1\game.cpp(103): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  MushroomController.cpp
-d:\git\gp2-coursework\lab1\mushroomcontroller.cpp(16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\git\gp2-coursework\lab1\mushroomcontroller.cpp(30): warning C4244: '+=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-d:\git\gp2-coursework\lab1\mushroomcontroller.cpp(34): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-d:\git\gp2-coursework\lab1\mushroomcontroller.cpp(46): warning C4244: '-=': conversion from 'double' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-  main.cpp
-  Generating Code...
+﻿  Skybox.cpp
   Lab1.vcxproj -> D:\git\GP2-Coursework\Debug\Lab1.exe

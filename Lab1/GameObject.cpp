@@ -27,16 +27,16 @@ glm::mat4 GameObject::getModelMatrix() {
 	return matrix;
 }
 
-void GameObject::update(double deltaTime)
+void GameObject::update(double deltaTime, InputData input)
 {
 	// iterates through all the components and calls update()
 	for (auto it = _components.begin(); it != _components.end(); ++it) {
-		(*it)->update(deltaTime);
+		(*it)->update(deltaTime, input);
 	}
 
 	// iterates through all the child gameobjects and calls update()
 	for (auto it = _children.begin(); it != _children.end(); ++it) {
-		(*it)->update(deltaTime);
+		(*it)->update(deltaTime, input);
 	}
 }
 

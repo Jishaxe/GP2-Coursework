@@ -6,6 +6,7 @@
 
 using namespace std;
 class Component;
+class InputData;
 enum ComponentType;
 
 // Doesn't do anything by itself - simply contains a bag of components. init(), update() and draw() are called on all components.
@@ -15,11 +16,13 @@ public:
 	GameObject();
 	~GameObject();
 
+	std::string name;
+
 	// initialize all components
 	void init();
 
 	// update all components
-	void update(double deltaTime);
+	void update(double deltaTime, InputData input);
 
 	// draw all components
 	void draw(Camera* camera);

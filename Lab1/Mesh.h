@@ -43,7 +43,7 @@ public:
 	void loadModel(IndexedModel* model);
 	void loadShader(std::string fileName);
 	void loadTexture(std::string fileName);
-	void update(double deltaTime);
+	void update(double deltaTime, InputData input);
 
 	Texture texture;
 	Shader shader;

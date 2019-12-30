@@ -58,7 +58,7 @@ void Mesh::loadModel(IndexedModel* model)
 	initModel(*model);
 }
 
-void Mesh::update(double deltaTime)
+void Mesh::update(double deltaTime, InputData input)
 {
 }
 

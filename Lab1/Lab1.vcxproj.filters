@@ -51,6 +51,18 @@
     <ClCompile Include="MushroomController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HammerController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Display.h">
@@ -92,12 +104,30 @@
     <ClInclude Include="MushroomController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HammerController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\shader.frag">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\res\shader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="skybox.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="skybox.frag">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

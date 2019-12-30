@@ -2,11 +2,13 @@
 
 #include "GameObject.h"
 #include "Camera.h"
+#include "InputData.h"
 
+class InputData;
 class GameObject;
 
 enum ComponentType {
-	MESH, MUSHROOM_CONTROLLER
+	MESH, MUSHROOM_CONTROLLER, HAMMER_CONTROLLER, BOX_COLLIDER
 };
 
 class Component
@@ -18,7 +20,7 @@ public:
 	GameObject* gameObject;
 	virtual ComponentType getType() = 0;
 	virtual void init() = 0;
-	virtual void update(double deltaTime) = 0;
+	virtual void update(double deltaTime, InputData input) = 0;
 	virtual void draw(Camera* camera) = 0;
 };
 

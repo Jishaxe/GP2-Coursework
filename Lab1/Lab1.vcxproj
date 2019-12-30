@@ -71,9 +71,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="HammerController.cpp" />
+    <ClCompile Include="InputData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -81,20 +84,25 @@
     <ClCompile Include="obj_loader.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="stb_image.c" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HammerController.h" />
+    <ClInclude Include="InputData.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MushroomController.h" />
     <ClInclude Include="obj_loader.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="transform.h" />
@@ -102,6 +110,8 @@
   <ItemGroup>
     <None Include="..\res\shader.frag" />
     <None Include="..\res\shader.vert" />
+    <None Include="skybox.frag" />
+    <None Include="skybox.vert" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="..\res\monkey3.obj">

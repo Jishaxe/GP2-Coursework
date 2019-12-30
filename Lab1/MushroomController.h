@@ -19,15 +19,16 @@ private:
 	const float DOWN_POSITION = -5;
 
 	// how long to stay up for
-	const float STAY_UP_FOR = 1;
+	const float STAY_UP_FOR = 3;
 
 	// chance per tick of popping up
 	const double CHANCE_OF_POPPING_UP = 0.001;
 public:
 	MushroomState mushroomState = HOLDING_DOWN;
 	ComponentType getType();
+	void hit(); 
 	void init();
-	void update(double deltaTime);
+	void update(double deltaTime, InputData input);
 	void draw(Camera* camera);
 
 private:

@@ -10,8 +10,13 @@ void MushroomController::init() {
 
 }
 
+void MushroomController::hit() {
+	glm::vec3 *pos = this->gameObject->transform.GetPos();
+	pos->y = DOWN_POSITION;
+	mushroomState = HOLDING_DOWN;
+}
 
-void MushroomController::update(double deltaTime) {
+void MushroomController::update(double deltaTime, InputData input) {
 	// get current mushroom position
 	glm::vec3 *pos = this->gameObject->transform.GetPos();
 

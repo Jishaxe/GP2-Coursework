@@ -18,6 +18,14 @@ public:
 		this->projection = glm::perspective(fov, aspect, nearClip, farClip);
 	}
 
+	inline glm::mat4 GetProjection() const {
+		return projection;
+	}
+
+	inline glm::mat4 GetView() const {
+		return glm::lookAt(pos, pos + forward, up);
+	}
+
 	inline glm::mat4 GetViewProjection() const
 	{
 		return projection * glm::lookAt(pos, pos + forward, up);
