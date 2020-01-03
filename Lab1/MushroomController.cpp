@@ -7,10 +7,11 @@ ComponentType MushroomController::getType()
 }
 
 void MushroomController::init() {
-
+	audioSource = (AudioSource*)(gameObject->getComponent(AUDIO_SOURCE));
 }
 
 void MushroomController::hit() {
+	audioSource->play("mushroom hit");
 	glm::vec3 *pos = this->gameObject->transform.GetPos();
 	pos->y = DOWN_POSITION;
 	mushroomState = HOLDING_DOWN;
@@ -27,7 +28,10 @@ void MushroomController::update(double deltaTime, InputData input) {
 		// if the mushroom is in down position..
 	case HOLDING_DOWN:
 		// if our random chance succeeds, start moving up
-		if (CHANCE_OF_POPPING_UP >= r) mushroomState = MOVING_UP; // start moving up if the chance is high enough
+		if (CHANCE_OF_POPPING_UP >= r) {
+			mushroomState = MOVING_UP; // start moving up if the chance is high enough
+			audioSource->play("mushroom up");
+		}
 		break;
 		// if the mushroom is moving up
 	case MOVING_UP:

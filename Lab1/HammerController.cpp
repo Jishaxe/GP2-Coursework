@@ -7,6 +7,7 @@ ComponentType HammerController::getType()
 
 void HammerController::init()
 {
+	audioSource = (AudioSource*)(gameObject->getComponent(AUDIO_SOURCE));
 }
 
 void HammerController::update(double deltaTime, InputData input)
@@ -21,11 +22,17 @@ void HammerController::update(double deltaTime, InputData input)
 		if (input.up) position->z += movement;
 		if (input.down) position->z -= movement;
 		position->y = UP_POSITION;
+		isDown = false;
 	}
 	else {
 		// otherwise hold down position
 		position->y = DOWN_POSITION;
 
+		bool shouldPlaySound = false;
+		if (!isDown) shouldPlaySound = true;
+		isDown = true;
+
+		bool collided = false;
 		// check to see if the hammer collided with anything this frame
 		BoxCollider* collider = (BoxCollider*)(gameObject->getComponent(BOX_COLLIDER));
 		if (collider->collisionThisFrame != nullptr) {
@@ -33,8 +40,14 @@ void HammerController::update(double deltaTime, InputData input)
 			MushroomController* mushroom = (MushroomController*)(collidedGO->getComponent(MUSHROOM_CONTROLLER));
 
 			// if the mushroom that was collided with is in HOLDING_UP state, hit it down
-			if (mushroom->mushroomState == HOLDING_UP) mushroom->hit();
+			if (mushroom->mushroomState == HOLDING_UP) {
+				if (shouldPlaySound) audioSource->play("hammer hit");
+				mushroom->hit();
+				collided = true;
+			}
 		}
+
+		if (!collided && shouldPlaySound) audioSource->play("hammer miss");
 	}
 }
 

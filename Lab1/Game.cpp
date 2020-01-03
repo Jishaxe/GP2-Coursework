@@ -30,67 +30,89 @@ void Game::run()
 
 void Game::init()
 {
+	// set up the SDL display
 	_gameDisplay.initDisplay(); 
 
+	// set up the audio manager and load the 4 sounds
+	audio.init();
+	audio.loadSound(resources.RESOURCES + "sounds\\hammerhit.wav", "hammer hit");
+	audio.loadSound(resources.RESOURCES + "sounds\\hammermiss.wav", "hammer miss");
+	audio.loadSound(resources.RESOURCES + "sounds\\mushroomhit.wav", "mushroom hit");
+	audio.loadSound(resources.RESOURCES + "sounds\\mushroomup.wav", "mushroom up");
+	
+	// player controls the hammer, load in the mesh and components
 	GameObject* hammer = new GameObject();
 	hammer->name = "Hammer";
 	Mesh* hammerMesh = new Mesh();
 
-	hammerMesh->loadShader(RESOURCES + "shader");
+	hammerMesh->loadShader(resources.RESOURCES + "shader");
 	hammerMesh->loadModel(resources.getModel("neuro_hammer_obj.obj"));
-	hammerMesh->loadTexture(RESOURCES + "neuro_hammer_diffuse.jpg");
+	hammerMesh->loadTexture(resources.RESOURCES + "neuro_hammer_diffuse.jpg");
 	hammer->addComponent(hammerMesh);
+
+	// starting position
 	hammer->transform.SetPos(glm::vec3(0, 5, 0));
 
 	HammerController* hammerController = new HammerController();
 	hammer->addComponent(hammerController);
 
+	// for colliding with the mushrooms
 	hammerCollider = new BoxCollider(glm::vec3(-1,-1,-1), glm::vec3(1,1,3));
 	hammer->addComponent(hammerCollider);
 
+	AudioSource* hammerAudio = new AudioSource();
+	hammerAudio->setAudio(&audio);
+	hammer->addComponent(hammerAudio);
+
+	// load the skybox from the 6 cube faces
 	vector<string> faces{
-	RESOURCES + "skybox/right.jpg",
-	RESOURCES + "skybox/left.jpg",
-	RESOURCES + "skybox/top.jpg",
-	RESOURCES + "skybox/bottom.jpg",
-	RESOURCES + "skybox/front.jpg",
-	RESOURCES + "skybox/back.jpg"
+	resources.RESOURCES + "skybox/right.jpg",
+	resources.RESOURCES + "skybox/left.jpg",
+	resources.RESOURCES + "skybox/top.jpg",
+	resources.RESOURCES + "skybox/bottom.jpg",
+	resources.RESOURCES + "skybox/front.jpg",
+	resources.RESOURCES + "skybox/back.jpg"
 	};
 
 	skybox.init(faces);
 
-	//hammer->transform.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 	gameObjects.push_back(hammer);
-
-	int i = 0;
+	
+	// populate all the plantpots
 	for (int x = -20; x < 20; x += 10) {
 		for (int z = -20; z < 20; z += 10) {
-			i++;
 			GameObject* plantPot = new GameObject();
 			plantPot->name = "PlantPot";
 
+			// plant pot mesh, doesn't do anything
 			Mesh* plantPotMesh = new Mesh();
-			plantPotMesh->loadShader(RESOURCES + "shader");
+			plantPotMesh->loadShader(resources.RESOURCES + "shader");
 			plantPotMesh->loadModel(resources.getModel("wall.obj"));
-			plantPotMesh->loadTexture(RESOURCES + "plant_pot.jpg");
+			plantPotMesh->loadTexture(resources.RESOURCES + "plant_pot.jpg");
 			plantPot->addComponent(plantPotMesh);
 
+			// position in a grid
 			plantPot->transform.SetPos(glm::vec3(x, 0, z));
 
+			// mushroom that pops out the plantpot
 			GameObject* mushroom = new GameObject();
 			mushroom->name = "Mushroom";
 			Mesh* mushroomMesh = new Mesh();
-			mushroomMesh->loadShader(RESOURCES + "shader");
+			mushroomMesh->loadShader(resources.RESOURCES + "shader");
 			mushroomMesh->loadModel(resources.getModel("mushroom.obj"));
-			mushroomMesh->loadTexture(RESOURCES + "mushroom.jpg");
+			mushroomMesh->loadTexture(resources.RESOURCES + "mushroom.jpg");
 			mushroom->addComponent(mushroomMesh);
 			mushroom->transform.SetPos(glm::vec3(0, -5, 3));
 
+			// Add the mushroom as a child of the plantpot so its position is attached to it
 			plantPot->addChild(mushroom);
 
 			MushroomController* mushroomController = new MushroomController();
 			mushroom->addComponent(mushroomController);
 
+			AudioSource* mushroomAudio = new AudioSource();
+			mushroomAudio->setAudio(&audio);
+			mushroom->addComponent(mushroomAudio);
 
 			BoxCollider* mushroomCollider = new BoxCollider(glm::vec3(-5, -5, -5), glm::vec3(5, 5, 5));
 			mushroom->addComponent(mushroomCollider);
@@ -103,10 +125,15 @@ void Game::init()
 	}
 
 
-
+	// set up camera
 	camera.initCamera(glm::vec3(-5, 50, -25), 70.0f, (float)_gameDisplay.getWidth()/_gameDisplay.getHeight(), 0.01f, 1000.0f);
 	camera.Pitch(70);
-	counter = 0.0f;
+
+	// initialize all gameobjects and components
+	for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it) {
+		(*it)->init();
+	}
+
 }
 
 void Game::update() 
@@ -126,19 +153,12 @@ void Game::update()
 		// read SDL input events and adjust InputData 
 		processInput();
 
-		/*
-		if (input.right) std::cout << "D" << std::endl;
-		if (input.left) std::cout << "A" << std::endl;
-		if (input.down) std::cout << "S" << std::endl;
-		if (input.up) std::cout << "W" << std::endl;
-		if (input.space) std::cout << "Space" << std::endl;
-		*/
-
 		// Update all the gameobjects
 		for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it) {
 			(*it)->update(deltaTime, input);
 		}
 
+		// checks collisions between every collider in the game
 		collisions();
 
 
@@ -222,17 +242,14 @@ void Game::draw()
 
 void Game::collisions()
 {
-	//for (auto a = colliders.begin(); a != colliders.end(); ++a) {
-		for (auto b = colliders.begin(); b != colliders.end(); ++b) {
+	for (auto b = colliders.begin(); b != colliders.end(); ++b) {
 			
-			if (hammerCollider->intersect((*b))) {
-				hammerCollider->collisionThisFrame = (*b);
-				(*b)->collisionThisFrame = hammerCollider;
-				std::cout << hammerCollider->gameObject->name << " collided with " << (*b)->gameObject->name << std::endl;
+		if (hammerCollider->intersect((*b))) {
+			hammerCollider->collisionThisFrame = (*b);
+			(*b)->collisionThisFrame = hammerCollider;
+			std::cout << hammerCollider->gameObject->name << " collided with " << (*b)->gameObject->name << std::endl;
 
-				break;
-			}
+			break;
 		}
-	//}
-
+	}
 }

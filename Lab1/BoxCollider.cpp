@@ -6,7 +6,8 @@ BoxCollider::BoxCollider(glm::vec3 minbounds, glm::vec3 maxbounds) {
 }
 
 bool BoxCollider::intersect(BoxCollider* other) {
-	// Find out the bounds multiplied by the transform matrices
+	// Find out the bounds multiplied by the transform matrices. 
+	// We change them to vec4 so we can multiply them by matrices
 
 	glm::vec4 aMinBounds = this->gameObject->getModelMatrix() * glm::vec4(this->minbounds, 1);
 	glm::vec4 aMaxBounds = this->gameObject->getModelMatrix() * glm::vec4(this->maxbounds, 1);
@@ -14,6 +15,7 @@ bool BoxCollider::intersect(BoxCollider* other) {
 	glm::vec4 bMinBounds = other->gameObject->getModelMatrix() * glm::vec4(other->minbounds, 1);
 	glm::vec4 bMaxBounds = other->gameObject->getModelMatrix() * glm::vec4(other->maxbounds, 1);
 
+	// Check to see if they intersect
 	return (aMinBounds.x <= bMaxBounds.x && aMaxBounds.x >= bMinBounds.x) &&
 		(aMinBounds.y <= bMaxBounds.y && aMaxBounds.y >= bMinBounds.y) &&
 		(aMinBounds.z <= bMaxBounds.z && aMaxBounds.z >= bMinBounds.z);

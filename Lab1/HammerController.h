@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "BoxCollider.h"
 #include "MushroomController.h"
+#include "AudioSource.h"
 
 class HammerController :
 	public Component
@@ -11,6 +12,8 @@ private:
 	const float MOVEMENT_PER_TICK = 30;
 	const float UP_POSITION = 5;
 	const float DOWN_POSITION = 0;
+	bool isDown = false;
+	AudioSource* audioSource;
 public:
 	ComponentType getType();
 	void init();

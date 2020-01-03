@@ -1,2 +1,5 @@
-﻿  Skybox.cpp
+﻿  Game.cpp
+d:\git\gp2-coursework\lab1\game.cpp(150): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+  Generating Code...
   Lab1.vcxproj -> D:\git\GP2-Coursework\Debug\Lab1.exe

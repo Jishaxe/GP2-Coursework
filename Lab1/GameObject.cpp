@@ -13,7 +13,17 @@ GameObject::~GameObject()
 
 void GameObject::init()
 {
+	bool isMushroom = name == "Mushroom";
 
+	// iterates through all the child gameobjects and calls init()
+	for (auto it = _children.begin(); it != _children.end(); ++it) {
+		(*it)->init();
+	}
+
+	// iterates through all the components and calls init()
+	for (auto it = _components.begin(); it != _components.end(); ++it) {
+		(*it)->init();
+	}
 }
 
 glm::mat4 GameObject::getModelMatrix() {

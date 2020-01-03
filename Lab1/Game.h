@@ -8,6 +8,7 @@
 #include "Mesh.h"
 #include <list>
 #include <iterator>
+#include "Audio.h"
 #include "Resources.h"
 #include "GameObject.h"
 #include "Texture.h"
@@ -15,6 +16,7 @@
 #include "transform.h"
 #include "BoxCollider.h"
 #include "Skybox.h"
+#include "AudioSource.h"
 
 using namespace std;
 
@@ -34,14 +36,13 @@ private:
 	void draw();
 	void collisions();
 
-	const string RESOURCES = "D:\\git\\GP2-Coursework\\res\\";
-
 	Display _gameDisplay;
 
 	Camera camera;
 	Skybox skybox;
 	Resources resources;
 	InputData input;
+	Audio audio;
 
 	// list of top-level gameobjects (nested GOs are kept inside them)
 	list<GameObject*> gameObjects;

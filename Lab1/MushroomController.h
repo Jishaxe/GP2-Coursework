@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "AudioSource.h"
 
 enum MushroomState {
 	MOVING_UP, MOVING_DOWN, HOLDING_UP, HOLDING_DOWN
@@ -33,5 +34,6 @@ public:
 
 private:
 	float _timeUpFor = 0; // counter for how long the mushroom has been up for
+	AudioSource* audioSource;
 };
 

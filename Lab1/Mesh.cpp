@@ -74,15 +74,22 @@ ComponentType Mesh::getType()
 
 void Mesh::draw(Camera* camera)
 {
+	// Bind the shader
 	shader.Bind();
+
+	// Pass the GameObject's transform matrix and the camera to the shader
 	shader.Update(this->gameObject->getModelMatrix(), *camera);
+
+	// Bind the texture to unit 0
 	texture.Bind(0);
 
+	// Bind the VAO
 	glBindVertexArray(vertexArrayObject);
 	
+	// Draw the model
 	glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_INT, 0);
-	//glDrawArrays(GL_TRIANGLES, 0, drawCount);
 	
+	// Unbind the VAO
 	glBindVertexArray(0);
 }
 
